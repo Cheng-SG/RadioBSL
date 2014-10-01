@@ -7,9 +7,9 @@ Introduction:
 This repo contains modules that implements wireless programming function for telosb mote running TinyOS. It program just one mote at one time and works only for motes in direct communication range of the Bridge (or Baststation). If your want more complex function like whole network programming system like Deluge. You can see it as an replacement of the default USB-plug programming, except that it works through the radio.
 
 Files:
-Radio-bsl.py: the python script run on computer to connect the remote mote, send your compiled binary program to the wireless     mote, and run the programm
-RFBslBridge: the folder implement a Serial-to-Radio bridge that forword the data send by Radio-bsl.py script to the target mote over the 802.15.4 wireless radio, and at the same time forward the ack from the remote module back to script.
-RFBslClient: The folder contains the RadioProgram commponet (including: RadioProgram.h, RadioPragramP.nc and RadioProgramC.nc) and a simple Blink example that uses it. The program do nothing but just blink the LED and wait for a remote programming.
+*Radio-bsl.py: the python script run on computer to connect the remote mote, send your compiled binary program to the wireless mote, and run the programm
+*RFBslBridge: the folder implement a Serial-to-Radio bridge that forword the data send by Radio-bsl.py script to the target mote over the 802.15.4 wireless radio, and at the same time forward the ack from the remote module back to script.
+*RFBslClient: The folder contains the RadioProgram commponet (including: RadioProgram.h, RadioPragramP.nc and RadioProgramC.nc) and a simple Blink example that uses it. The program do nothing but just blink the LED and wait for a remote programming.
 
 How it works:
 Basically the RadioProgram module implement the very basic fuction of receiving HEX binary data from radio and store it in external m25p80 NOR flash. When the HEX is received correctly and fully, it get copied from external storage and write into the msp430's flash. After that, just reboot. 
@@ -17,8 +17,8 @@ At the computer side, the python script Radio-bsl.py send the HEX binary file (s
 To include radio progrmaming capability to your program, just copy these files(RadioProgram.h, RadioProgram.nc, RadioPragramP.nc, RadioProgramC.nc and volumes-stm25p.xml) to your program folder, and add one line in your high level configuration file: "components RadioProgramC;"
 
 Usage:
-Assume we have two Telosb motes. We here setup one of them (connected to /dev/ttyUSB) to be a Bridge with ID=1 and another (connected to /dev/ttyUSB1) to be a remote node with ID=5 to be later programmed over the radio. Here is a step by step setup
-Step0: use git to clone this repo 
+Assume we have two Telosb motes. We here setup one of them (connected to /dev/ttyUSB) to be a Bridge with ID=1 and another (connected to /dev/ttyUSB1) to be a remote node with ID=5 to be later programmed over the radio. Here is a step by step setup:
+Step0: use git to clone this repo
 Step1: copy Radio-bsl.py to /usr/bin
        command: chmod +x Radio-bsl.py && sudo cp Radio-bsl.py /usr/bin/
 Step2: compile the RFBslBridge and program it to a Telosb mote (to act as Bridge later)
@@ -31,6 +31,6 @@ Step4: copy RadioProgram* files from RFBslClient folder to YOUR_PROGRAM_FOLDER, 
                 cd YOUR_PROGRAM_FOLDER  && make telosb
                 Radio-bsl.py /dev/ttyUSB0 5
 
-More usage information about the Radio-bsl.py script can be find by just run the script with no input. It can allow you to change the destination ID, program a specific HEX file to Remote mote, and Setup an mote as Bridge.
+More usage information about the Radio-bsl.py script can be find by just run the script with no parameter. It can allow you to change the destination ID, program a specific HEX file to Remote mote, and Setup an mote as Bridge.
 Email to: Cheng Li (vivid8710@gmail.com) for more help. 
 
